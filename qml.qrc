@@ -1,0 +1,23 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>error.png</file>
+        <file>tbcalendar@4x.png</file>
+        <file>tbcalendar@3x.png</file>
+        <file>tbcalendar@2x.png</file>
+        <file>tbcalendar.png</file>
+        <file>tbtoday@4x.png</file>
+        <file>tbtoday@3x.png</file>
+        <file>tbtoday@2x.png</file>
+        <file>tbtoday.png</file>
+        <file>tbleft@4x.png</file>
+        <file>tbleft@3x.png</file>
+        <file>tbleft@2x.png</file>
+        <file>tbleft.png</file>
+        <file>tbright@4x.png</file>
+        <file>tbright@3x.png</file>
+        <file>tbright@2x.png</file>
+        <file>tbright.png</file>
+        <file>youtube.png</file>
+    </qresource>
+</RCC>
