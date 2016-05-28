@@ -4,7 +4,7 @@ import Qt.labs.controls 1.0
 import Qt.labs.controls.material 1.0
 import Qt.labs.controls.universal 1.0
 import Qt.labs.settings 1.0
-import com.davidkbowers.demo 1.0
+import com.davidkbowers.APOD_BLOG2 1.0
 
 ApplicationWindow {
     id: window
@@ -24,6 +24,11 @@ ApplicationWindow {
             mytitle.text = "Uknown server error.";
             myPicture.source = "error.png"
         }
+    }
+
+    Settings {
+        id: settings
+        property string style: "Material"
     }
 
     header: ToolBar {
@@ -48,6 +53,7 @@ ApplicationWindow {
             y: titleArea.y
             width: titleArea.width
             height: titleArea.height
+            color: "white"
             text: "Saturn and Mars visit Milky Way Star Clouds"
 
         }
@@ -58,6 +64,7 @@ ApplicationWindow {
             y: dateArea.y
             width: dateArea.width
             height: dateArea.height
+            color: "white"
             text: "2016-05-11"
 
         }
@@ -87,6 +94,7 @@ ApplicationWindow {
                    wrapMode: TextEdit.Wrap
                    width:explanationArea.width
                    readOnly:true
+                   color: "white"
                    text:  "Planets, stars, nebulas and a galaxy -- this impressive image has them all. Closest to home are the two planets Mars (right) and Saturn (center), visible as the two bright orange spots in the upper half of the featured image. On the central right are the colorful Rho Ophiuchus star clouds featuring the bright orange star Antares lined up below Mars.  These interstellar clouds contain both red emission nebulas and blue reflection nebulas.  At the top right of the image is the Blue Horsehead reflection nebula. On the lower left are many dark absorption nebulas that extend from the central band of our Milky Way Galaxy. The featured deep composite was composed of multiple deep exposures taken last month from Brazil.  Although you need a telescope to see the nebulosities, Saturn and Mars will remain visible to the unaided eye this month toward the east, just after sunset.    Follow APOD on: Facebook,  Google Plus,  Instagram, or Twitter"
             }
         }

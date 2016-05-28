@@ -13,8 +13,10 @@
 
 int main(int argc, char ** argv)
 {
-    QGuiApplication::setApplicationName("davidkbowers.com");
-    QGuiApplication::setOrganizationName("APODDEMO.001");
+    QCoreApplication::setOrganizationName("David K. Bowers");
+    QCoreApplication::setOrganizationDomain("davidkbowers.com");
+    QCoreApplication::setApplicationName("APOD BLOG 2");
+
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
@@ -23,7 +25,7 @@ int main(int argc, char ** argv)
     qputenv("QT_LABS_CONTROLS_STYLE", settings.value("style").toByteArray());
 
     // Register our component type with QML.
-    qmlRegisterType<APODDownloader>("com.davidkbowers.demo", 1, 0, "APODDownloader");
+    qmlRegisterType<APODDownloader>("com.davidkbowers.APOD_BLOG2", 1, 0, "APODDownloader");
 
     int rc = 0;
 

@@ -96,10 +96,10 @@ private:
     QString _hdurl;
     bool _error;
 
-    QString downloadDate;
-    QString textUrl;
-    QString imageUrl;
-    DownloadFile textDownloader;
+    QString _downloadDate;
+    QString _textUrl;
+    QString _imageUrl;
+    DownloadFile _textDownloader;
 };
 
 #endif // APODDOWNLOADER_H

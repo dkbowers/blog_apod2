@@ -9,10 +9,10 @@
 
 APODDownloader::APODDownloader()
 {
-    downloadDate = QDate::currentDate().toString(QString("yyyy-MM-dd"));
+    _downloadDate = QDate::currentDate().toString(QString("yyyy-MM-dd"));
 
-    connect(&textDownloader, SIGNAL (fileDownloadCompleted()),this, SLOT (onTextDownloadComplete()));
-    connect(&textDownloader, SIGNAL (fileDownloadError()),this, SLOT (onTextDownloadError()));
+    connect(&_textDownloader, SIGNAL (fileDownloadCompleted()),this, SLOT (onTextDownloadComplete()));
+    connect(&_textDownloader, SIGNAL (fileDownloadError()),this, SLOT (onTextDownloadError()));
 
     loadTextAndImage();
 }
@@ -142,7 +142,7 @@ void APODDownloader::setError(const bool b)
 void APODDownloader::downloadPicture(QString theDate)
 {
     if(theDate.length() > 0)
-        downloadDate = theDate;
+       _downloadDate = theDate;
 
     loadTextAndImage();
 }
@@ -152,8 +152,8 @@ void APODDownloader::downloadPrevious()
     QString newDate;
     changeDate(newDate, -1);
 
-    if(newDate != downloadDate) {
-        downloadDate = newDate;
+    if(newDate != _downloadDate) {
+        _downloadDate = newDate;
         loadTextAndImage();
     }
 }
@@ -163,8 +163,8 @@ void APODDownloader::downloadNext()
     QString newDate;
     changeDate(newDate, 1);
 
-    if(newDate != downloadDate) {
-        downloadDate = newDate;
+    if(newDate != _downloadDate) {
+        _downloadDate = newDate;
         loadTextAndImage();
     }
 }
@@ -173,29 +173,32 @@ void APODDownloader::downloadToday()
 {
     QDate todaysDate(QDate::currentDate());
 
-    if(todaysDate.toString(QString("yyyy-MM-dd")) != downloadDate) {
-        downloadDate = todaysDate.toString(QString("yyyy-MM-dd"));
+    if(todaysDate.toString(QString("yyyy-MM-dd")) != _downloadDate) {
+        _downloadDate = todaysDate.toString(QString("yyyy-MM-dd"));
         loadTextAndImage();
     }
 }
 
 void APODDownloader::changeDate(QString &newDate, int daysToAdd)
 {
-    QDate firstDate(1995, 1, 1);
+
+    QDate firstDate(1995, 9, 22);   // first photo in the gallery
 
     QDate todaysDate(QDate::currentDate());
 
-    QString sY = downloadDate.left(4);
+    QString sY = _downloadDate.left(4);
     int year = sY.toInt();
 
-    QString sM = downloadDate.mid(5, 2);
+    QString sM = _downloadDate.mid(5, 2);
     int month = sM.toInt();
 
-    QString sD = downloadDate.right(2);
+    QString sD = _downloadDate.right(2);
     int day = sD.toInt();
 
     QDate prev(year, month, day);
-    prev = prev.addDays(daysToAdd);
+
+    if(daysToAdd > 0 || daysToAdd < 0)
+        prev = prev.addDays(daysToAdd);
 
     if(prev < firstDate)
         newDate = firstDate.toString(QString("yyyy-MM-dd"));
@@ -209,20 +212,20 @@ void APODDownloader::loadTextAndImage()
 {
     _error = false;
     textUrl = "https://api.nasa.gov/planetary/apod?api_key=0000000000000000000000000000000000000000&date=";
-    textUrl += downloadDate;
-    qDebug() << "Retrieving apod url: " << textUrl << "\n";
-    textDownloader.setUrl(textUrl);
-    textDownloader.doDownload();
+    _textUrl += downloadDate;
+    qDebug() << "Retrieving apod url: " << _textUrl << "\n";
+    _textDownloader.setUrl(_textUrl);
+    _textDownloader.doDownload();
 }
 
 void APODDownloader::onTextDownloadComplete()
 {
     QJsonObject jsonObj;
-    QByteArray ba = textDownloader.getReplyData();
+    QByteArray ba = _textDownloader.getReplyData();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(ba.data());
     jsonObj = jsonResponse.object();
 
-    imageUrl = jsonObj["url"].toString();
+    _imageUrl = jsonObj["url"].toString();
 
     setCopyright(jsonObj["copyright"].toString());
     setPicturedate(jsonObj["date"].toString());
@@ -234,10 +237,10 @@ void APODDownloader::onTextDownloadComplete()
 
     QString mediaType = jsonObj["media_type"].toString();
     if(mediaType == QString("image")){
-        setUrl(imageUrl);
+        setUrl(_imageUrl);
     }
     else{
-        setUrl(QString(":/youtube.png"));
+        setUrl(QString("youtube.png"));
     }
     setMediatype(mediaType);
 }

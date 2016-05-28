@@ -19,5 +19,6 @@
         <file>tbright@2x.png</file>
         <file>tbright.png</file>
         <file>youtube.png</file>
+        <file>qtlabscontrols.conf</file>
     </qresource>
 </RCC>
